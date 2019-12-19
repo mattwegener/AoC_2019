@@ -27,7 +27,7 @@ def make_grid(size):
         for item in wire:
             let = re.search("[a-zA-Z]", item).group().capitalize()
             num = int(re.search("[0-9]+", item).group())
-            print("=========== {} {} @ {},{} ===========".format(let, num, row, col))
+            #print("=========== {} {} @ {},{} ===========".format(let, num, row, col))
             if let == 'R':
                 for i in range(num):
                     row, col = (row, col + 1)
@@ -72,4 +72,25 @@ def make_grid(size):
     return grid
 
 
-grid_print(make_grid(7600))
+def grid_dist(size, grid):
+    dist = []
+    max_len = size + 2
+    rows, cols = (max_len * 2, max_len * 2)
+    for row in range(rows):
+        for col in range(cols):
+            if grid[row][col] == "X":
+                x = abs(col-max_len)
+                y = abs(row-max_len)
+                #pair = (row, col)
+                dist.append(x+y)
+    dist.sort()
+    return dist
+
+
+def part1(size):
+    paths = make_grid(size)
+    distances = grid_dist(size, paths)
+    return distances[0]
+
+
+print(part1(9000))
